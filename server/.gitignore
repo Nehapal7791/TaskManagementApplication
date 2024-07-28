@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+
+# TypeScript compiled output
+dist/
+build/
+
+# TypeScript declaration files
+*.d.ts
+
+# Optional npm cache directory
+.npm
+
+# dotenv environment variables file
+.env
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# VS Code settings
+.vscode/
