@@ -7,6 +7,12 @@
       "config": { "includeFiles": ["dist/**"] }
     }
   ],
+  "env": {
+    "BRANCH": "custom-branch"
+  },
+  "scripts": {
+    "vercel-deploy": "if [ \"$BRANCH\" != \"main\" ]; then echo \"Cannot deploy from $BRANCH branch\"; exit 1; fi"
+  },
   "routes": [
     {
       "src": "/(.*)",
