@@ -3,7 +3,7 @@ import { Application } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import router from "./routes/index.route";
+import router from "./src/routes/index.route";
 const app: Application = express();
 
 app.use(cors());
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1", router);
 app.listen(PORT, async () => {
-  console.log(`🗄️  Server Fire on http://localhost/${PORT}`);
+  console.log(`🗄️  Server Fire on http://localhost:${PORT}`);
 
   try {
     await mongoose.connect(process.env.DATABASE_URL as string);

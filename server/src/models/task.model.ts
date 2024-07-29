@@ -5,7 +5,7 @@ const TaskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Task title is required"],
     },
     description: {
       type: String,
@@ -13,7 +13,6 @@ const TaskSchema = new mongoose.Schema(
     },
     priority: {
       type: String,
-      required: true,
       enum: ["low", "medium", "urgent"],
     },
     deadline: {
@@ -22,7 +21,8 @@ const TaskSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      required: true,
+      required: [true, "Status is required"],
+      enum: ["Under Review", "in progress", "completed", "to-do"],
     },
     isFavorite: {
       type: Boolean,
@@ -30,7 +30,7 @@ const TaskSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: [true, "User is required to specify task "],
     },
   },
   { timestamps: true }
