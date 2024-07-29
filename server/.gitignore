@@ -2,7 +2,6 @@
 node_modules/
 
 # TypeScript compiled output
-dist/
 build/
 
 # TypeScript declaration files
