@@ -3,7 +3,10 @@ import { User } from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { invalidateToken } from "../middleware/auth.middleware";
-
+const cookieOptions = {
+  expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+  httpOnly: true,
+};
 export const registerUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
@@ -29,6 +32,8 @@ export const registerUser = async (req: Request, res: Response) => {
       { expiresIn: "1h" }
     );
 
+    res.cookie("token", token, cookieOptions);
+    res.setHeader("Authorization", `Bearer ${token}`);
     res.status(201).json({
       token,
       user: {
@@ -72,11 +77,18 @@ export const loginUser = async (req: Request, res: Response) => {
       process.env.JWT_SECRET as string,
       { expiresIn: "1d" }
     );
+    res.cookie("token", token, cookieOptions);
+    res.setHeader("Authorization", `Bearer ${token}`);
 
     return res.status(200).json({
       status: 200,
       success: true,
       message: "Login success",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
       token,
     });
   } catch (error: any) {
@@ -111,5 +123,9 @@ export const logoutUser = (req: Request, res: Response) => {
   if (!token) return res.status(400).json({ message: "No token provided." });
 
   invalidateToken(token);
+  res.cookie("token", "", {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
   res.status(200).json({ message: "Logout successful." });
 };
